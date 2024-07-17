@@ -5,9 +5,13 @@ from threading import Timer, Lock, Event
 import time
 import asyncio
 from PIL import Image
-import pickle, base64
+import json
+
+from image_encoding import ImageEncoder
 
 app = FastAPI()
+encoder = ImageEncoder()
+
 
 class Item(BaseModel):
     data: str
@@ -16,46 +20,52 @@ class BatchResponse(BaseModel):
     index: int
     b64: str
 
-batch = []
-batch_lock = Lock()
-batch_event = Event()
+encode_batch = []
+encode_batch_lock = Lock()
+encode_batch_event = Event()
 batch_limit = 16
 batch_timeout = 5  # seconds
 
-responses = []
+encode_responses = []
 
-def process_batch():
-    global batch, responses
-    with batch_lock:
-        if batch:
-            print(f"Processing batch of {len(batch)} items")
+
+def search(*args, **kwargs):
+    pass
+
+
+def encode_process_batch():
+    global encode_batch, encode_responses
+    with encode_batch_lock:
+        if encode_batch:
+            print(f"Processing batch of {len(encode_batch)} items")
             # Simulate batch processing and create a response
-            results = [BatchResponse(index=i, result=f"Processed: {item.data}") for i, item in enumerate(batch)]
+            encoding_results = encoder.encode_images(encode_batch).tolist()
+            results = [BatchResponse(index=i, result=json.dumps(encoding_result)) for i, encoding_result in enumerate(encoding_results)]
             for i, result in enumerate(results):
-                responses[i].set_result(result)
-            batch.clear()
-            responses.clear()
-            batch_event.set()  # Notify all waiting requests
+                encode_responses[i].set_result(result)
+            encode_batch.clear()
+            encode_responses.clear()
+            encode_batch_event.set()  # Notify all waiting requests
         else:
             print("No items to process")
-        batch_event.clear()
+        encode_batch_event.clear()
 
-def batch_timer():
-    process_batch()
-    Timer(batch_timeout, batch_timer).start()
+def encode_batch_timer():
+    encode_process_batch()
+    Timer(batch_timeout, encode_batch_timer).start()
 
-Timer(batch_timeout, batch_timer).start()
+Timer(batch_timeout, encode_batch_timer).start()
 
 @app.post("/encode", response_model=BatchResponse)
 async def add_to_batch(file: UploadFile):
-    global batch, responses
+    global encode_batch, encode_responses
     response_event = asyncio.Future()
-    with batch_lock:
+    with encode_batch_lock:
         im = Image.open(file)
-        batch.append(im)
-        responses.append(response_event)
-        if len(batch) >= batch_limit:
-            process_batch()
+        encode_batch.append(im)
+        encode_responses.append(response_event)
+        if len(encode_batch) >= batch_limit:
+            encode_process_batch()
     await response_event
     return response_event.result()
 
