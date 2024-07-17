@@ -6,6 +6,7 @@ import clip
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 import numpy as np
+
 class ImageDataset(Dataset):
     def __init__(self, image_paths, preprocess):
         self.image_paths = image_paths
@@ -21,17 +22,6 @@ class ImageDataset(Dataset):
         return image
 
 def get_data_paths(dir: str | list[str], data_formats: list, prefix: str = '') -> list[str]:
-    """
-    Get list of files in a folder that have a file extension in the data_formats.
-
-    Args:
-      dir (str | list[str]): Dir or list of dirs containing data.
-      data_formats (list): List of file extensions. Ex: ['jpg', 'png']
-      prefix (str): Prefix for logging messages.
-
-    Returns:
-      A list of strings.
-    """
     try:
         f = []  # data files
         for d in dir if isinstance(dir, list) else [dir]:
@@ -70,17 +60,6 @@ def get_image_embeddings(data_dir, model_name="ViT-B/32", batch_size=32, device=
     image_embeddings = np.vstack(image_embeddings)
     
     return image_embeddings, image_paths
-def process_and_save_image_embeddings(data_dir, output_embedding_file="image_embeddings.npy", output_paths_file="image_paths.txt", model_name="ViT-B/32", batch_size=32, device="cuda" if torch.cuda.is_available() else "cpu"):
-    # Get image embeddings
-    image_embeddings, image_paths = get_image_embeddings(data_dir, model_name=model_name, batch_size=batch_size, device=device)
 
-    # Save the embeddings and paths
-    np.save(output_embedding_file, image_embeddings)
-    with open(output_paths_file, "w") as f:
-        for path in image_paths:
-            f.write(f"{path}\n")
-
-    print("Image encoding complete.")
-
-data_dir = "data/coco-128"
-process_and_save_image_embeddings(data_dir)
+data_dir = "data/coco-128/train"
+image_embeddings, image_paths = get_image_embeddings(data_dir)
