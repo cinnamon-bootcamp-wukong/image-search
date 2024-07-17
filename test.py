@@ -40,16 +40,3 @@ class ImageEncoder:
         # Convert list to numpy array
         return np.vstack(image_embeddings)
 
-# Example usage
-if __name__ == "__main__":
-    # Load images from a directory or any other source
-    image_paths = ["data/coco-128/test/000000000009_jpg.rf.6acc173402df5523069e146edb03ff4b.jpg", "data/coco-128/test/000000000025_jpg.rf.ed74f70d3b9ede1832934740b7ac60c7.jpg"]  # Update with your image paths
-    images = [Image.open(path).convert("RGB") for path in image_paths]
-
-    # Initialize the encoder and encode the images
-    encoder = ImageEncoder()
-    embeddings = encoder.encode_images(images)
-
-    # Output the embeddings
-    for idx, emb in enumerate(embeddings):
-        print(f"Image {idx+1} Embedding: {emb}")
