@@ -1,3 +1,4 @@
+
 import torch
 from PIL import Image
 import numpy as np
@@ -38,3 +39,4 @@ class ImageEncoder:
 
         # Convert list to numpy array
         return np.vstack(image_embeddings)
+
