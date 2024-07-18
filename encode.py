@@ -3,9 +3,11 @@ from typing import List
 from pydantic import BaseModel
 from threading import Timer, Lock, Event
 import time
+import io
 import asyncio
 from PIL import Image
 import json
+
 
 from image_encoding import ImageEncoder
 
@@ -18,7 +20,7 @@ class Item(BaseModel):
 
 class BatchResponse(BaseModel):
     index: int
-    b64: str
+    result: str
 
 encode_batch = []
 encode_batch_lock = Lock()
@@ -61,7 +63,8 @@ async def add_to_batch(file: UploadFile):
     global encode_batch, encode_responses
     response_event = asyncio.Future()
     with encode_batch_lock:
-        im = Image.open(file)
+        content = await file.read()
+        im = Image.open(io.BytesIO(content))
         encode_batch.append(im)
         encode_responses.append(response_event)
         if len(encode_batch) >= batch_limit:
