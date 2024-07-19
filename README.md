@@ -8,5 +8,6 @@ cd image-search
 python embedding.py # Download embedded database
 ```
 ```
-python test_search.py # Run test search
+python search_endpoint.py # Run API
+curl -X POST -F "file=@{your_image.jpg}" http://127.0.0.1:8000/search # Test Search
 ```
