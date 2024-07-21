@@ -10,6 +10,7 @@ Clone this repository and switch to `search_endpoint` branch
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
 cd image-search
 git checkout search_endpoint
+pip install -r requirements.txt
 ```
 The program has 2 parts:
 - Encode endpoint: Lies on port 8000, employs batch processing with at most 5s wait time to process a batch with maximum of 16 images.
