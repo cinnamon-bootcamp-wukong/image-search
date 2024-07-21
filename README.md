@@ -5,6 +5,14 @@ This is a part of the assignment from Cinnamon AI bootcamp.
 This program has 2 endpoints, one for encoding images using CLIP and one for searching for closest images (in the COCO 128 dataset) with the input image using CLIP and FAISS.
 
 ## Run the program
+Install `conda` package manager via Anaconda or Miniconda if it is not installed.
+
+Install `faiss`:
+```bash
+conda install -c conda-forge faiss-gpu
+```
+`faiss-gpu` is replaced with `faiss-cpu` if you don't have a NVIDIA GPU.
+
 Clone this repository and switch to `search_endpoint` branch
 ```bash
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
