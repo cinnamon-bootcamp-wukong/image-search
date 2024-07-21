@@ -8,6 +8,7 @@ This program has 2 endpoints, one for encoding images using CLIP and one for sea
 Clone this repository and switch to `search_endpoint` branch
 ```bash
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
+cd image-search
 git checkout search_endpoint
 ```
 The program has 2 parts:
