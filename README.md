@@ -12,7 +12,7 @@ conda install -c conda-forge faiss-gpu
 ```
 `faiss-gpu` is replaced with `faiss-cpu` if you don't have a NVIDIA GPU.
 
-Clone this repository and switch to `search_endpoint` branch
+Clone this repository
 ```bash
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
 cd image-search
