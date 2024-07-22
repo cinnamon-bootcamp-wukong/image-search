@@ -8,7 +8,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import streamlit as st
 
 # interact with FastAPI endpoint
-backend = "http://127.0.0.1:8000/search"
+backend = "http://127.0.0.1:8500/search"
 
 icon = Image.open("app/img/logo.jpeg")
 st.set_page_config(
