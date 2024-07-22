@@ -36,6 +36,7 @@ def search(*args, **kwargs):
 
 
 def encode_process_batch():
+    print('encode_process_batch')
     global encode_batch, encode_responses
     with encode_batch_lock:
         if encode_batch:
@@ -53,6 +54,7 @@ def encode_process_batch():
         encode_batch_event.clear()
 
 def encode_batch_timer():
+    print('encode_batch_timer')
     encode_process_batch()
     Timer(batch_timeout, encode_batch_timer).start()
 
@@ -60,6 +62,7 @@ Timer(batch_timeout, encode_batch_timer).start()
 
 @app.post("/encode", response_model=BatchResponse)
 async def add_to_batch(file: UploadFile):
+    print('add_to_batch')
     global encode_batch, encode_responses
     response_event = asyncio.Future()
     with encode_batch_lock:
@@ -71,6 +74,17 @@ async def add_to_batch(file: UploadFile):
             encode_process_batch()
     await response_event
     return response_event.result()
+
+@app.post("/embedding")
+async def embedding_function(file : UploadFile):
+    print('Embedding')
+    content = await file.read()
+    image_list = []
+    im = Image.open(io.BytesIO(content))
+    image_list.append(im)
+    results = encoder.encode_images(image_list).tolist()
+    print('Done Encoding')
+    return results[0]
 
 if __name__ == "__main__":
     import uvicorn
