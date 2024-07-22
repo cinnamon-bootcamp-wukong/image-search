@@ -45,6 +45,6 @@ This will return the NumPy array-converted-to-list representation of the closest
 
 Or you can:
 ```bash
-streamlit run app/ui.pi
+streamlit run app/ui.py
 ```
 This will goto the UI of webpage.
