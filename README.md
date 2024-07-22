@@ -34,7 +34,7 @@ This will return a NumPy array converted to a list containing the CLIP encoding 
 
 - Search endpoint: Lies on port 8500
 ```bash
-fastapi run --host 0.0.0.0 --port 8500 encode.py
+fastapi run --host 0.0.0.0 --port 8500 search_endpoint.py
 ```
 
 
