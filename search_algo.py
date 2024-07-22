@@ -62,6 +62,6 @@ class ImageSearchEngine:
 
         D, I = index.search(encoded_images.astype(np.float32), top_k)
         similar_images = [[self.image_paths_path[i] for i in indices] for indices in I]
-        #similar_images = np.array([np.array([np.array(Image.open(img_path)) for img_path in paths]) for paths in similar_images])
+        similar_images = np.array([np.array([np.array(Image.open(img_path)) for img_path in paths]) for paths in similar_images])
 
-        return similar_images[0]
+        return similar_images

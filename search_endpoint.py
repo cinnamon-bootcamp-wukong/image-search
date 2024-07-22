@@ -53,7 +53,7 @@ async def similarity_search(file: UploadFile, request: Request):
     encoded_image = np.array([response])
     print(encoded_image.shape)
     similar_images = search_engigne.get_similar_images(encoded_image, top_k = 1)
-    return {"similar_images": similar_images}
+    return {"similar_images": similar_images.tolist()}
 
 if __name__ == "__main__":
     import uvicorn
