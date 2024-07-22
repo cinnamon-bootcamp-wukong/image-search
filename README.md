@@ -43,8 +43,8 @@ curl -X POST -F "file=@/path/to/your/image.jpg" http://$your_ip:8500/search/
 ```
 This will return the NumPy array-converted-to-list representation of the closest image to the input.
 
-Or you can:
+Or you can visit:
 ```bash
-streamlit run app/ui.py
+http://35.163.120.104:8501/
 ```
 This will goto the UI of webpage.
