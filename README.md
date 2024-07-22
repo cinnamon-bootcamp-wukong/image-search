@@ -3,6 +3,11 @@
 This is a part of the assignment from Cinnamon AI bootcamp.
 
 This program has 2 endpoints, one for encoding images using CLIP and one for searching for closest images (in the COCO 128 dataset) with the input image using CLIP and FAISS.
+
+You can use our web application by visiting the link below:
+```bash
+http://35.163.120.104:8501/
+```
 ## Run the program
 Install `conda` package manager via Anaconda or Miniconda if it is not installed.
 
@@ -43,8 +48,8 @@ curl -X POST -F "file=@/path/to/your/image.jpg" http://$your_ip:8500/search/
 ```
 This will return the NumPy array-converted-to-list representation of the closest image to the input.
 
-Or you can visit:
+Or you can:
 ```bash
-http://35.163.120.104:8501/
+streamlit run app/ui.pi
 ```
 This will goto the UI of webpage.
