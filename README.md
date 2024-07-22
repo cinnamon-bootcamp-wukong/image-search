@@ -16,7 +16,6 @@ Clone this repository and switch to `search_endpoint` branch
 ```bash
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
 cd image-search
-git checkout search_endpoint
 pip install -r requirements.txt
 ```
 
