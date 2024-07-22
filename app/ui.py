@@ -8,29 +8,8 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 import streamlit as st
 
-"""
-    This Streamlit application provides a user interface for performing image searches using a FastAPI backend.
-
-    The application allows users to upload an image and receive a similar image as a result. The user interface includes:
-        - An image uploader for users to select an image from their local system.
-        - A button to trigger the search.
-        - Display areas for the uploaded image and the search result.
-
-    The code includes the following key components:
-        - `process(image, server_url: str)`: A function that sends the uploaded image to a FastAPI endpoint for processing. It uses `MultipartEncoder` to handle image file uploads and `requests` to send the POST request to the server.
-        - Streamlit configuration and layout settings:
-        - The page title and icon are set.
-        - A sidebar is used to display the application icon and provide upload functionality.
-        - The main page is divided into two columns for displaying the original and similar images.
-
-    Usage:
-        1. Upload an image using the file uploader in the sidebar.
-        2. Click the "SEARCH" button to send the image to the backend server and receive a similar image.
-        3. View both the original uploaded image and the search result displayed on the page.
-"""
-
 # interact with FastAPI endpoint
-backend = "http://127.0.0.1:8500/search"
+backend = "http://0.0.0.0:8500/search"
 
 icon = Image.open("app/img/logo.jpeg")
 st.set_page_config(
