@@ -5,9 +5,8 @@ This is a part of the assignment from Cinnamon AI bootcamp.
 This program has 2 endpoints, one for encoding images using CLIP and one for searching for closest images (in the COCO 128 dataset) with the input image using CLIP and FAISS.
 
 ***You can use our web application by visiting the link below:***
-```bash
 [http://35.163.120.104:8501/](http://35.163.120.104:8501/)
-```
+
 ## Run the program
 Install `conda` package manager via Anaconda or Miniconda if it is not installed.
 
