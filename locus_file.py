@@ -3,7 +3,7 @@ from PIL import Image
 import random
 
 global image_path
-image_path = ['dataset.png', 'result_page_1.jpg', 'Loss.png']
+image_path = ['sample_data/dataset.png', 'sample_data/result_page_1.jpg', 'sample_data/Loss.png']
 
 class AppUswer(HttpUser):
     wait_time = between(2, 5)

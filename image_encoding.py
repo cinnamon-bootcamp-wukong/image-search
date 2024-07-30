@@ -21,6 +21,8 @@ class ImageEncoder:
         Returns:
         - A numpy array containing the encoded feature vectors.
         """
+
+        self.model.eval()
         # List to store image embeddings
         image_embeddings = []
 
@@ -29,12 +31,13 @@ class ImageEncoder:
             for image in images:
                 # Preprocess the image
                 inputs = self.processor(images=image, return_tensors="pt")
-                pixel_values = inputs["pixel_values"].to(self.device)
+                pixel_values = inputs["pixel_values"].half().to(self.device)
 
                 # Get the image features
-                embeddings = self.model.get_image_features(pixel_values=pixel_values)
-                embeddings /= embeddings.norm(dim=-1, keepdim=True)  # Normalize embeddings
-                image_embeddings.append(embeddings.cpu().numpy())
+                with torch.cuda.amp.autocast():
+                    embeddings = self.model.get_image_features(pixel_values=pixel_values)
+                    embeddings /= embeddings.norm(dim=-1, keepdim=True)  # Normalize embeddings
+                    image_embeddings.append(embeddings.cpu().numpy())
 
         # Convert list to numpy array
         return np.vstack(image_embeddings)
