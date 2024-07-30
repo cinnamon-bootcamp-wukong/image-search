@@ -76,7 +76,7 @@ async def add_to_batch(file: UploadFile):
     return response_event.result()
 
 
-@app.post("/fast_encode", response_model=BatchResponse)
+@app.post("/fast_encode")
 async def add_to_batch_fast(file: UploadFile):
     print('add_to_batch_fast')
     content = await file.read()
