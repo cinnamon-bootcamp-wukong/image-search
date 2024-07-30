@@ -75,6 +75,15 @@ async def add_to_batch(file: UploadFile):
     await response_event
     return response_event.result()
 
+
+@app.post("/fast_encode", response_model=BatchResponse)
+async def add_to_batch_fast(file: UploadFile):
+    print('add_to_batch_fast')
+    content = await file.read()
+    im = Image.open(io.BytesIO(content))
+    encoding_results = encoder.encode_images([im]).tolist()
+    return encoding_results
+
 @app.post("/embedding")
 async def embedding_function(file : UploadFile):
     print('Embedding')
