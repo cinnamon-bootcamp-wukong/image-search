@@ -2,54 +2,37 @@
 
 This is a part of the assignment from Cinnamon AI bootcamp.
 
-This program has 2 endpoints, one for encoding images using CLIP and one for searching for closest images (in the COCO 128 dataset) with the input image using CLIP and FAISS.
+## Usage
 
-***You can use our web application by visiting the link below:***
-
-[http://35.163.120.104:8501/](http://35.163.120.104:8501/)
-
-## Run the program
-Install `conda` package manager via Anaconda or Miniconda if it is not installed.
-
-Install `faiss`:
-```bash
-conda install -c conda-forge faiss-gpu
+### 1. Set up environment
 ```
-`faiss-gpu` is replaced with `faiss-cpu` if you don't have a NVIDIA GPU.
-
-Clone this repository
-```bash
 git clone https://github.com/cinnamon-bootcamp-wukong/image-search
 cd image-search
+```
+
+### 2. **Install Required Packages:**
+
+- Install the required packages from `requirements.txt`:
+
+```sh
 pip install -r requirements.txt
 ```
 
-The program has 2 parts:
-- Encode endpoint: Lies on port 8000, employs batch processing with at most 5s wait time to process a batch with maximum of 16 images.
-To run the endpoint:
-```bash
-fastapi run --host 0.0.0.0 encode.py
+- If you have already install `requirments.txt` (for wukong's members):
 ```
-
-To use the encode endpoint:
-```bash
-curl -L -X POST -F "file=@/path/to/your/image.jpg" http://$your_ip:8000/encode/
+pip install locust
 ```
-This will return a NumPy array converted to a list containing the CLIP encoding of the given image. Note: ***DO*** remember the `-L` flag.
-
-- Search endpoint: Lies on port 8500
-```bash
-fastapi run --host 0.0.0.0 --port 8500 search_endpoint.py
+3. Script
+- Run `fast_encode` endpoint:
 ```
-
-
-```bash
-curl -X POST -F "file=@/path/to/your/image.jpg" http://$your_ip:8500/search/
+python encode.py
 ```
-This will return the NumPy array-converted-to-list representation of the closest image to the input.
-
-Or you can:
-```bash
-streamlit run app/ui.pi
+- Start `locust`:
 ```
-This will goto the UI of webpage.
+locust -f locus_file.py
+```
+- Take the given url in command line, such as `http://localhost:8089/`:
+- Fill in the blank :
+    * User : 100
+    * Spawm : 1
+    * Host(crucial) : your fastapi endpoint (`http://127.0.0.1:8000`)
