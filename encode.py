@@ -2,11 +2,13 @@ from fastapi import FastAPI, UploadFile
 from typing import List
 from pydantic import BaseModel
 from threading import Timer, Lock, Event
+from cache import CacheDatabase
 import time
 import io
 import asyncio
 from PIL import Image
 import json
+import numpy as np
 
 
 from image_encoding import ImageEncoder
@@ -81,7 +83,13 @@ async def add_to_batch_fast(file: UploadFile):
     print('add_to_batch_fast')
     content = await file.read()
     im = Image.open(io.BytesIO(content))
-    encoding_results = encoder.encode_images([im]).tolist()
+    db = CacheDatabase()
+    if db.find_by_img(im) is not None:
+        encoding_results = db.find_by_img(im).tolist()
+        return {"Find in cache" : encoding_results}
+    else:
+        encoding_results = encoder.encode_images([im]).tolist()
+        db.execute(im, np.array(encoding_results))
     return {"result" : encoding_results}
 
 @app.post("/embedding")

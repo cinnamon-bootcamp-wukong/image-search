@@ -41,11 +41,11 @@ class CacheDatabase:
         )
         self.connection.commit()
 
-    def execute(self, img_path, result_array):
+    def execute(self, img, result_array):
         """
         Inserts a numpy array into the cache database with a hash key.
         """
-        hash_value = self._hashing(img_path)
+        hash_value = self._hashing(img)
         shape = ','.join(map(str, result_array.shape))
         dtype = str(result_array.dtype)
         blob = result_array.tobytes()
@@ -55,7 +55,7 @@ class CacheDatabase:
         )
         self.connection.commit()
 
-    def find_by_path(self, img_path):
+    def find_by_img(self, img):
         """
         Retrieves a numpy array from the cache database using an image path.
 
@@ -69,7 +69,7 @@ class CacheDatabase:
         numpy.ndarray or None
             The cached numpy array if found, otherwise None.
         """
-        hash_value = self._hashing(img_path)
+        hash_value = self._hashing(img)
         return self.find_by_key(hash_value)
 
     def find_by_key(self, key):
